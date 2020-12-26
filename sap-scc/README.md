@@ -1,23 +1,17 @@
-# Alpine with GLIBC 2.28 embedded
+# docker-SAPSCC	
 
-An Alpine Linux image with BASH+GLIBC and only 30 MB in size. 
-The full list of installable packages and contents may be found on https://pkgs.alpinelinux.org/packages
+*[2019-04-29]* The Dockerfile contains version 2.12.0.1 of SAP Cloud Connector	
+<br />*[initial version]* The Dockerfile contains version 2.11.3 of SAP Cloud Connector **(deprecated)**	
 
-## DockerHub: 
-https://cloud.docker.com/u/afuscella/repository/docker/afuscella/glibc
+Ready to use in containers. Just check for the appropriate **dockers tags before pulling**. 	
 
-## Available package manager in container
+Notice that SAPSCC version may be manipulated through the environment variables below:	
 
-* apk
+* `SCC_VERSION_MAJOR`
+* `SCC_VERSION_MINOR`
+* `SCC_VERSION_BUILD`
+* `SCC_VERSION_ID`
 
-## Installed packages
+# Available package manager
 
-Package         | Version   | Description                                  | Size (after its installation)
-:-------------- |:---------:|:--------------------------------------------:|------------------------------:
-gnupg           | 2.2.15    | GNU Privacy Guard 2 - a PGP replacement tool | ~4.37MB
-ca-certificates | 20190108  | Common CA certificates PEM files             | ~720KB
-bash            | 5.5.0     | The GNU Bourne Again shell                   | ~1.05MB
-glibc           | 2.28      | C compiler library compatible with jdk/jre 8 | ~22MB
-
-## Docker Tags
-* alpine:glibc
+* `zypper`
