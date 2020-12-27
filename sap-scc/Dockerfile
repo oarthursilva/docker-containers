@@ -1,32 +1,30 @@
 FROM afuscella/opensuse:jre8u181
-MAINTAINER Arthur Silva <fuscellaarthur@gmail.com>
 
-# General information
-LABEL br.afuscella.scc.version="1.0.0"
-LABEL br.afuscella.scc.vendor="Arthur Fuscella Silva"
-LABEL br.afuscella.scc.name="Docker for SAP Cloud Connector (Linux x64)"
-
-# SCC Version
+# scc Version
 ENV SCC_VERSION_MAJOR 2
 ENV SCC_VERSION_MINOR 12
-ENV SCC_VERSION_BUILD 0
-ENV SCC_VERSION_ID 1
+ENV SCC_VERSION_BUILD 5
 
-# Expose ports
-EXPOSE 3000 8000 443 8443
+# create folder for scc
+RUN mkdir -p /tmp/scc
 
-# Download and unarchive SAP Cloud Connector
+# download and unarchive the SAP Cloud Connector
 RUN wget --no-check-certificate \
 	--header "Cookie: eula_3_1_agreed=tools.hana.ondemand.com/developer-license-3_1.txt" \
-	"https://tools.hana.ondemand.com/additional/sapcc-${SCC_VERSION_MAJOR}.${SCC_VERSION_MINOR}.${SCC_VERSION_BUILD}.${SCC_VERSION_ID}-linux-x64.zip" \
-	-O /tmp/sapscc.zip &&\
-	unzip /tmp/sapscc.zip -d /tmp &&\
-	rm /tmp/sapscc.zip
+	"https://tools.hana.ondemand.com/additional/sapcc-${SCC_VERSION_MAJOR}.${SCC_VERSION_MINOR}.${SCC_VERSION_BUILD}-linux-x64.zip" \
+	-O /tmp/scc/sapscc.zip &&\
+	unzip /tmp/scc/sapscc.zip -d /tmp/scc &&\
+	rm /tmp/scc/*.zip
 
-# Install SAP Cloud Connector
-RUN rpm -ivf /tmp/com.sap.scc-ui-${SCC_VERSION_MAJOR}.${SCC_VERSION_MINOR}.${SCC_VERSION_BUILD}-15.x86_64.rpm &&\
-	rm /tmp/com.sap.scc-ui-${SCC_VERSION_MAJOR}.${SCC_VERSION_MINOR}.${SCC_VERSION_BUILD}-${SCC_VERSION_ID}5.x86_64.rpm
+# delete unused files
+RUN rpm -ivf /tmp/scc/*.rpm
+RUN rm /tmp/scc/*.rpm
+
+USER sccadmin
 
 WORKDIR /opt/sap/scc
-CMD ["/bin/bash"]
+
+# expose ports
+EXPOSE 3000 8000 443 8443
+
 ENTRYPOINT ["/opt/sap/scc/go.sh"]
