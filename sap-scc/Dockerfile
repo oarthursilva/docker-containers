@@ -2,8 +2,8 @@ FROM afuscella/opensuse:jre8u181
 
 # scc Version
 ENV SCC_VERSION_MAJOR 2
-ENV SCC_VERSION_MINOR 12
-ENV SCC_VERSION_BUILD 5
+ENV SCC_VERSION_MINOR 13
+ENV SCC_VERSION_BUILD 1
 
 # create folder for scc
 RUN mkdir -p /tmp/scc
